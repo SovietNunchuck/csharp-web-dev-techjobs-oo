@@ -13,7 +13,7 @@ namespace TechJobsTests
         [TestInitialize]
         public void CreateTestObject()
         {
-            testJob = new Job("Product tester", "ACME", "Desert", "Quality control", "Persistence");
+            testJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
             testString = testJob.ToString();
         }
 
@@ -40,7 +40,7 @@ namespace TechJobsTests
         [TestMethod]
         public void TestJobsForEquality()
         {
-            Job testJob2 = new Job("Product tester", "ACME", "Desert", "Quality control", "Persistence");
+            Job testJob2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
             Assert.IsFalse (testJob.Equals(testJob2));
         }
 
@@ -66,7 +66,7 @@ namespace TechJobsTests
         [TestMethod]
         public void EmptyFieldReturnsDataNotAvailable()
         {
-            Job oneEmptyFielder = new Job("", "ACME", "Desert", "Quality control", "Persistence");
+            Job oneEmptyFielder = new Job("", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
             string emptyBoi = oneEmptyFielder.ToString();
             Assert.IsTrue(emptyBoi.Contains("Data not available"));
         }
@@ -74,7 +74,7 @@ namespace TechJobsTests
         [TestMethod]
         public void DetectsIfJobExists()
         {
-            Job emptyFielder = new Job("", "", "", "", "");
+            Job emptyFielder = new Job("", new Employer(""), new Location(""), new PositionType(""), new CoreCompetency(""));
             string emptyBoi = emptyFielder.ToString();
             Assert.AreEqual(emptyBoi, "OOPS! This job does not seem to exist.");
         }

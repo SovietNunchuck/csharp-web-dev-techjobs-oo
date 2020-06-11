@@ -19,13 +19,13 @@ namespace TechJobsOO
             nextId++;
         }
 
-        public Job(string name, string employerName, string employerLocation, string jobType, string jobCoreCompetency) : this()
+        public Job(string name, Employer employerName, Location employerLocation, PositionType jobType, CoreCompetency jobCoreCompetency) : this()
         {
             Name = name;
-            EmployerName = new Employer(employerName);
-            EmployerLocation = new Location(employerLocation);
-            JobType = new PositionType(jobType);
-            JobCoreCompetency = new CoreCompetency(jobCoreCompetency); 
+            EmployerName = employerName;
+            EmployerLocation = employerLocation;
+            JobType = jobType;
+            JobCoreCompetency = jobCoreCompetency; 
         }
 
         public string CheckForEmptyField(string value)
