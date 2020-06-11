@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Security.Cryptography;
 using TechJobsOO;
 
 namespace TechJobsTests
@@ -16,7 +17,7 @@ namespace TechJobsTests
         }
 
         [TestMethod]
-        public void TestJobsForEquality()
+        public void TestJobConstructorSetsAllFields()
         {
             Job testJob = new Job("Product tester", "ACME", "Desert", "Quality control", "Persistence");
             Assert.AreEqual(testJob.Name, "Product tester");
@@ -24,6 +25,14 @@ namespace TechJobsTests
             Assert.AreEqual(testJob.EmployerLocation.Value, "Desert");
             Assert.AreEqual(testJob.JobType.Value, "Quality control");
             Assert.AreEqual(testJob.JobCoreCompetency.Value, "Persistence");
+        }
+
+        [TestMethod]
+        public void TestJobsForEquality()
+        {
+            Job testJob1 = new Job("Product tester", "ACME", "Desert", "Quality control", "Persistence");
+            Job testJob2 = new Job("Product tester", "ACME", "Desert", "Quality control", "Persistence");
+            Assert.IsFalse (testJob1.Equals(testJob2));
         }
     }
 }
