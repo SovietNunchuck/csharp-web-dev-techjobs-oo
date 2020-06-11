@@ -7,6 +7,16 @@ namespace TechJobsTests
     [TestClass]
     public class JobTests
     {
+        Job testJob;
+        string testString;
+
+        [TestInitialize]
+        public void CreateTestObject()
+        {
+            testJob = new Job("Product tester", "ACME", "Desert", "Quality control", "Persistence");
+            testString = testJob.ToString();
+        }
+
         [TestMethod]
         public void TestSettingJobId()
         {
@@ -19,7 +29,7 @@ namespace TechJobsTests
         [TestMethod]
         public void TestJobConstructorSetsAllFields()
         {
-            Job testJob = new Job("Product tester", "ACME", "Desert", "Quality control", "Persistence");
+            
             Assert.AreEqual(testJob.Name, "Product tester");
             Assert.AreEqual(testJob.EmployerName.Value, "ACME");
             Assert.AreEqual(testJob.EmployerLocation.Value, "Desert");
@@ -30,9 +40,43 @@ namespace TechJobsTests
         [TestMethod]
         public void TestJobsForEquality()
         {
-            Job testJob1 = new Job("Product tester", "ACME", "Desert", "Quality control", "Persistence");
             Job testJob2 = new Job("Product tester", "ACME", "Desert", "Quality control", "Persistence");
-            Assert.IsFalse (testJob1.Equals(testJob2));
+            Assert.IsFalse (testJob.Equals(testJob2));
+        }
+
+        [TestMethod]
+        public void ToStringStartsAndEndsWithBlankLine()
+        {
+
+            Assert.AreEqual(testString[0], '\n');
+            Assert.AreEqual(testString[^1], '\n');
+        }
+
+        [TestMethod]
+        public void ToStringContainsLabelForEachField()
+        {
+            Assert.IsTrue(testString.Contains("\nID: "));
+            Assert.IsTrue(testString.Contains("\nName: "));
+            Assert.IsTrue(testString.Contains("\nEmployer: "));
+            Assert.IsTrue(testString.Contains("\nLocation: "));
+            Assert.IsTrue(testString.Contains("\nPosition Type: "));
+            Assert.IsTrue(testString.Contains("\nCore Competency: "));
+        }
+
+        [TestMethod]
+        public void EmptyFieldReturnsDataNotAvailable()
+        {
+            Job oneEmptyFielder = new Job("", "ACME", "Desert", "Quality control", "Persistence");
+            string emptyBoi = oneEmptyFielder.ToString();
+            Assert.IsTrue(emptyBoi.Contains("Data not available"));
+        }
+
+        [TestMethod]
+        public void DetectsIfJobExists()
+        {
+            Job emptyFielder = new Job("", "", "", "", "");
+            string emptyBoi = emptyFielder.ToString();
+            Assert.AreEqual(emptyBoi, "OOPS! This job does not seem to exist.");
         }
     }
 }
